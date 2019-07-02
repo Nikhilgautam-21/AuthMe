@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Authenticate Me
+        </title>
+        <style>
+            main{
+                margin: 0 auto;
+                text-align: center
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h2>Authenticate Me</h2>
+        </header>
+        <ul>
+            <li><a href='/'>Home</a></li>
+        </ul>
+        <main>
+            <div id="form">
+                <div >
+                    <label>Email</label>
+                    <input type = "text" id="email"/>
+                </div>
+                <div>
+                    <label>Username</label>
+                    <input type="text" id="user"/>
+                </div>
+                <div>
+                    <label>Password</label>
+                    <input type="password" id="pass"/>
+                </div>
+                <input type="button" value="login" id="sign-up"/>
+            </div>
+        </main>
+        <div style="text-align: center;top:0">
+            <h3 style="color:red;display: none" id="err-msg"></h3>
+            <h3 style="color:green;display: none" id="success-msg"></h3>
+        </div>
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script>
+            $("#sign-up").click(function(){
+                var email = $('#email').val();
+                var pass = $('#pass').val();
+                var user = $('#user').val();
+                $('#err-msg').css('display','none')
+                $('#success-msg').css('display','none')
+                $.ajax({
+                    url: 'http://localhost:8200/api/signup',
+                    type: "POST",
+                    data: {"email":email,"password":pass,"username":user},
+                    success: function(data){
+                        if(data.success){
+                            $('#success-msg').text(data.message)
+                            $('#success-msg').css('display','block')
+                        }
+                        else{
+                            $('#err-msg').text(data.message)
+                            $('#err-msg').css('display','block')
+                        }
+                    }
+                })
+            })
+        </script>
+</html> 
